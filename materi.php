@@ -5,7 +5,7 @@
     <title>WEBMATIKA</title>
     <link href="assets/css/layout.css" rel="stylesheet" type="text/css">
 </head>
-<body bgcolor="#99FFCC">
+<body>
     <div id="container">
         <header>
             <ul id="nav">
@@ -18,7 +18,7 @@
         <article id="content" class="layer">
             <h1>Materi Pembelajaran</h1>
             <section>
-                text...<br/>     
+                text...<br/>
                 text...<br/>
                 text...<br/>
             </section>

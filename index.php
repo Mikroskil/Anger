@@ -5,7 +5,7 @@
     <title>WEBMATIKA</title>
     <link href="assets/css/layout.css" rel="stylesheet" type="text/css">
 </head>
-<body bgcolor="#99FFCC">
+<body>
     <div id="container">
         <header>
             <ul id="nav">
