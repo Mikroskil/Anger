@@ -16,10 +16,14 @@
             </ul>		
         </header>
         <article id="content" class="layer">
-            <h1>text...</h1>
+            <h1>HALAMAN UTAMA</h1>
             <section>
-                <h2>text...</h2>        
-                <p>text...</p>
+                <p>
+                    Website ini merupakan website matematika yang ditujukan kepada siswa SMA.
+                    Dalam website ini, tersedia materi lengkap dari SMA 1 sampai SMA 3.
+                    Selain itu, juga terdapat soal latihan untuk dikerjakan oleh siswa SMA beserta pembahasannya.
+                    Tidak hanya itu, website ini juga memberikan fitur untuk try out UN SMA.
+                </p>
             </section>
         </article>
         <footer>
