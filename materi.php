@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__.'/function/materi.php';
+
+$materiArray = getMateri();
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,16 +18,24 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="materi.php">Materi</a></li>
                 <li><a href="latihan.php">Latihan</a></li>
-                <li><a href="about.php">About</a></li>		
+                <li><a href="about.php">About</a></li>
             </ul>		
         </header>
         <article id="content" class="layer">
-            <h1>Materi Pembelajaran</h1>
-            <section>
-                text...<br/>
-                text...<br/>
-                text...<br/>
-            </section>
+            <?php if (!isset($_GET['id'])): ?>
+                <h1>Materi Pembelajaran</h1>
+                <section>
+                    <?php foreach ($materiArray as $materi): ?>
+                        <p><a href="?id=<?php echo $materi->id ?>"><?php echo $materi->judul; ?></a></p>
+                    <?php endforeach; ?>
+                </section>
+            <?php else: ?>
+                <?php $materi = findOneMateri($_GET['id']); ?>
+                <h1><?php echo $materi->judul; ?></h1>
+                <section>
+                    <p><?php echo $materi->isi; ?></p>
+                </section>
+            <?php endif; ?>
         </article>
         <footer>
       	    <div>&copy; Copyright 2013</div>
