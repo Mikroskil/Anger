@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/function/materi.php';
 
-$materiArray = getMateri();
+$kategoriArray = getKategori();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,15 +25,19 @@ $materiArray = getMateri();
             <?php if (!isset($_GET['id'])): ?>
                 <h1>Materi Pembelajaran</h1>
                 <section>
-                    <?php foreach ($materiArray as $materi): ?>
-                        <p><a href="?id=<?php echo $materi->id ?>"><?php echo $materi->judul; ?></a></p>
+                    <?php foreach ($kategoriArray as $kategori): ?>
+                        <p><?php echo $kategori['nama']; ?></p>
+                        <?php $materiArray = findMateriByKategori($kategori['id']); ?>
+                        <?php foreach ($materiArray as $materi): ?>
+                            <p><a href="?id=<?php echo $materi['id'] ?>"><?php echo $materi['judul']; ?></a></p>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
                 </section>
             <?php else: ?>
                 <?php $materi = findOneMateri($_GET['id']); ?>
-                <h1><?php echo $materi->judul; ?></h1>
+                <h1><?php echo $materi['judul']; ?></h1>
                 <section>
-                    <p><?php echo $materi->isi; ?></p>
+                    <p><?php echo $materi['isi']; ?></p>
                 </section>
             <?php endif; ?>
         </article>
