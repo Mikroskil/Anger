@@ -39,8 +39,8 @@ $tipeArray = getTipeLatihan();
                     <h1><?php echo $latihan['judul']; ?></h1>
                     <?php $tipe = findTipe($latihan['id_tipe']); ?>
                     <?php $soalArray = findSoalByLatihan($latihan['id'], $tipe['tipe']); ?>
-                    <?php foreach ($soalArray as $key => $soal): ?>
-                        <section>
+                    <section>
+                        <?php foreach ($soalArray as $key => $soal): ?>
                             <p><?php echo ($key+1).'. '.$soal['soal']; ?></p>
                             <?php if ($tipe['tipe'] == "Pilihan Ganda"): ?>
                                 <ul>
@@ -50,11 +50,12 @@ $tipeArray = getTipeLatihan();
                                     <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_4']; ?></li>
                                     <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_5']; ?></li>
                                 </ul>
-                            <?php else: ?>
-                                <p><textarea name="jawaban[<?php echo $key; ?>]"></textarea></p>
                             <?php endif; ?>
-                        </section>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        <?php if ($tipe['tipe'] == "Isian"): ?>
+                            <p>Jawaban : <input type="file" name="jawaban" /></p>
+                        <?php endif; ?>
+                    </section>
                     <input type="submit" value="Kumpul" />
                 </form>
             <?php endif; ?>
