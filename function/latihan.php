@@ -7,7 +7,7 @@ function getTipeLatihan(){
     $sth = $pdo->prepare('SELECT * FROM tipe_latihan');
 
     $sth->execute();
-    return $sth->fetchAll();
+    return $sth->fetchAll(PDO::FETCH_BOTH);
 }
 
 function findTipe($id){
@@ -16,7 +16,7 @@ function findTipe($id){
     $sth = $pdo->prepare('SELECT tipe FROM tipe_latihan WHERE id = :id');
 
     $sth->execute(array('id' => $id));
-    return $sth->fetch();
+    return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
 function findOneLatihan($id){
@@ -25,7 +25,7 @@ function findOneLatihan($id){
     $sth = $pdo->prepare('SELECT * FROM latihan WHERE id = :id');
 
     $sth->execute(array('id' => $id));
-    return $sth->fetch();
+    return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
 function findLatihanByTipe($id){
@@ -34,7 +34,7 @@ function findLatihanByTipe($id){
     $sth = $pdo->prepare('SELECT * FROM latihan WHERE id_tipe = :id_tipe');
 
     $sth->execute(array('id_tipe' => $id));
-    return $sth->fetchAll();
+    return $sth->fetchAll(PDO::FETCH_BOTH);
 }
 
 function findSoalByLatihan($id, $tipe){
@@ -44,11 +44,11 @@ function findSoalByLatihan($id, $tipe){
 	    $sth = $pdo->prepare('SELECT * FROM pilihan_ganda WHERE id_latihan = :id_latihan');
 
 	    $sth->execute(array('id_latihan' => $id));
-	    return $sth->fetchAll();
+	    return $sth->fetchAll(PDO::FETCH_BOTH);
 	} else {
 	    $sth = $pdo->prepare('SELECT * FROM isian WHERE id_latihan = :id_latihan');
 
 	    $sth->execute(array('id_latihan' => $id));
-	    return $sth->fetchAll();
+	    return $sth->fetchAll(PDO::FETCH_BOTH);
 	}
 }

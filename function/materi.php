@@ -7,7 +7,7 @@ function getKategori(){
     $sth = $pdo->prepare('SELECT * FROM kategori');
 
     $sth->execute();
-    return $sth->fetchAll();
+    return $sth->fetchAll(PDO::FETCH_BOTH);
 }
 
 function findOneKategori($id){
@@ -16,7 +16,7 @@ function findOneKategori($id){
     $sth = $pdo->prepare('SELECT * FROM kategori WHERE id = :id');
 
     $sth->execute(array('id' => $id));
-    return $sth->fetch();
+    return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
 function findOneMateri($id){
@@ -25,7 +25,7 @@ function findOneMateri($id){
     $sth = $pdo->prepare('SELECT * FROM materi WHERE id = :id');
 
     $sth->execute(array('id' => $id));
-    return $sth->fetch();
+    return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
 function findMateriByKategori($id){
@@ -34,7 +34,7 @@ function findMateriByKategori($id){
     $sth = $pdo->prepare('SELECT * FROM materi WHERE id_kategori = :id_kategori');
 
     $sth->execute(array('id_kategori' => $id));
-    return $sth->fetchAll();
+    return $sth->fetchAll(PDO::FETCH_BOTH);
 }
 
 function deleteMateri($id){

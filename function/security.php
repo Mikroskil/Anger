@@ -13,5 +13,5 @@ function login($username, $password){
         'user' => $username,
         'pass' => $password
     ));
-    return $sth->fetch();
+    return $sth->fetch(PDO::FETCH_ASSOC);
 }

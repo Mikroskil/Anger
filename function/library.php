@@ -14,7 +14,7 @@ function getRole($username){
     ');
 
     $sth->execute(array('username' => $username));
-    $role = $sth->fetch();
+    $role = $sth->fetch(PDO::FETCH_ASSOC);
 
     return $role['role'];
 }
