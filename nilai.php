@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__.'/function/latihan.php';
+require_once __DIR__.'/function/jawaban.php';
 
-$tipeArray = getTipeLatihan();
+$tipeArray = findSoalperSiswa($_SESSION['username'], );
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +23,7 @@ $tipeArray = getTipeLatihan();
         </header>
         <article id="content" class="layer">
             <?php if (!isset($_GET['id'])): ?>
-                <h1>Latihan</h1>
+                <h1>Nilai</h1>
                 <section>
                     <?php foreach ($tipeArray as $tipe): ?>
                         <p><?php echo $tipe['tipe']; ?></p>
@@ -68,3 +68,4 @@ $tipeArray = getTipeLatihan();
     </div>
 </body>
 </html>
+
