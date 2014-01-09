@@ -34,21 +34,22 @@ $tipeArray = getTipeLatihan();
                     <?php endforeach; ?>
                 </section>
             <?php else: ?>
-                <form action="" method="post">
+                <form action="function/latihan/jawaban.php" method="post">
                     <?php $latihan = findOneLatihan($_GET['id']); ?>
                     <h1><?php echo $latihan['judul']; ?></h1>
                     <?php $tipe = findTipe($latihan['id_tipe']); ?>
                     <?php $soalArray = findSoalByLatihan($latihan['id'], $tipe['tipe']); ?>
+                    <input type="hidden" value="<?php echo $tipe['tipe']; ?>" name="tipe">
                     <section>
                         <?php foreach ($soalArray as $key => $soal): ?>
                             <p><?php echo ($key+1).'. '.$soal['soal']; ?></p>
                             <?php if ($tipe['tipe'] == "Pilihan Ganda"): ?>
                                 <ul>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_1']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_2']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_3']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_4']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" /><?php echo $soal['pilihan_5']; ?></li>
+                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="A" /><?php echo $soal['pilihan_1']; ?></li>
+                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="B" /><?php echo $soal['pilihan_2']; ?></li>
+                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="C" /><?php echo $soal['pilihan_3']; ?></li>
+                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="D" /><?php echo $soal['pilihan_4']; ?></li>
+                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="E" /><?php echo $soal['pilihan_5']; ?></li>
                                 </ul>
                             <?php endif; ?>
                         <?php endforeach; ?>
