@@ -30,7 +30,7 @@ function findJumlahSoal($latihan){
 
     $sth->execute(array(
         'latihan' => $latihan
-    ));var_dump(count($sth));die();
+    ));
     
     return $sth->fetchAll(PDO::FETCH_BOTH);
 }
