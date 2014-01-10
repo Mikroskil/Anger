@@ -20,6 +20,8 @@ if ($tipe == "Pilihan Ganda") {
             $jawaban = $kumpulanJawaban[$key];
             $hasil = ($soal['jawaban'] == $jawaban) ? 1 : 0;
             tambahJawabanPilihanGanda($user, $latihan, $pilgan, $jawaban, $hasil);
+        } else {
+            tambahJawabanPilihanGanda($user, $latihan, $pilgan, 'F', 0);
         }
     }
 } else {
