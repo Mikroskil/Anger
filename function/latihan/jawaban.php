@@ -3,9 +3,11 @@ require_once __DIR__.'/../../config.php';
 require_once __DIR__.'/../jawaban.php';
 require_once __DIR__.'/../latihan.php';
 
+session_start();
+
 $user = $_SESSION['username'];
 $tipe = $_POST['tipe'];
-$latihan = (int)$_POST['latihan'];
+$latihan = $_POST['latihan'];
 $kumpulanJawaban = $_POST['jawaban'];
 
 $daftarSoal = findSoalByLatihan($latihan, $tipe);
@@ -16,7 +18,7 @@ if ($tipe == "Pilihan Ganda") {
         $pilgan = $soal['id'];
         if (isset($kumpulanJawaban[$key])){
             $jawaban = $kumpulanJawaban[$key];
-            $hasil = ($soal['jawaban'] == $jawaban) ? 'T' : 'F';
+            $hasil = ($soal['jawaban'] == $jawaban) ? 1 : 0;
             tambahJawabanPilihanGanda($user, $latihan, $pilgan, $jawaban, $hasil);
         }
     }
