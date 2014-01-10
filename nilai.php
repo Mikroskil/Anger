@@ -2,13 +2,7 @@
 require_once __DIR__.'/function/jawaban.php';
 
 session_start();
-$jawabanArray = findJawabanBenar($_SESSION['username']);
-$benarArray = array();
-$jumlahArray = array();
-foreach ($jawabanArray as $jawaban){
-    $jumlahArray[] = findJumlahSoal($jawaban['id_latihan']);
-    $benarArray[] = $jawaban['benar'];
-}
+$jawabanArray = findJawaban($_SESSION['username']);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -32,10 +26,13 @@ foreach ($jawabanArray as $jawaban){
         <article id="content" class="layer">
             <h1>Nilai</h1>
             <section>
+                <?php foreach ($jawabanArray as $jawaban): ?>
                 <div class="row">
-                    <div class="col-md-8">k</div>
-                    <div class="text-right">o</div>
+                    <div class="col-md-8"><?php echo $jawaban['judul']; ?></div>
+                    <?php $nilai = round($jawaban['benar'] * 100.0 / $jawaban['total']); ?>
+                    <div class="text-right"><?php echo $nilai; ?></div>
                 </div>
+                <?php endforeach; ?>
             </section>
         </article>
         <footer>
@@ -44,4 +41,3 @@ foreach ($jawabanArray as $jawaban){
     </div>
 </body>
 </html>
-

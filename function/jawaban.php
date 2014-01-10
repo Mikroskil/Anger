@@ -20,28 +20,16 @@ function tambahJawabanPilihanGanda($user, $latihan, $pilgan, $jawaban, $hasil){
     ));
 }
 
-function findJumlahSoal($latihan){
+function findJawaban($user){
     global $pdo;
 
     $sth = $pdo->prepare('
-        SELECT * FROM pilihan_ganda
-        WHERE id_latihan = :latihan
-    ');
-
-    $sth->execute(array(
-        'latihan' => $latihan
-    ));var_dump(count($sth));die();
-    
-    return $sth->fetchAll(PDO::FETCH_BOTH);
-}
-
-function findJawabanBenar($user){
-    global $pdo;
-
-    $sth = $pdo->prepare('
-        SELECT id_user, id_latihan, count(hasil) as benar FROM jawaban_pilgan
-        WHERE id_user = :user AND hasil=1
-        GROUP BY id_latihan
+        SELECT j.id_user, l.judul, count(hasil) as total,
+            count(CASE WHEN hasil=1 THEN 1 END) as benar
+        FROM jawaban_pilgan j
+        INNER JOIN latihan l on l.id=j.id_latihan
+        WHERE j.id_user = :user
+        GROUP BY j.id_latihan
     ');
 
     $sth->execute(array(
