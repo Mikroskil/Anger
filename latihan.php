@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/function/latihan.php';
+require_once __DIR__.'/function/library.php';
 
 $tipeArray = getTipeLatihan();
 ?>
@@ -10,6 +11,7 @@ $tipeArray = getTipeLatihan();
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>WEBMATIKA</title>
     <link href="assets/css/layout.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="container">
@@ -22,14 +24,27 @@ $tipeArray = getTipeLatihan();
             </ul>		
         </header>
         <article id="content" class="layer">
+            <?php $username = getUsername(); ?>
+            <?php $role = getRole($username); ?>
             <?php if (!isset($_GET['id'])): ?>
                 <h1>Latihan</h1>
                 <section>
+                    <?php if ($role == 'guru'): ?>
+                        <a href="latihan_admin.php?action=isi" class="btn btn-default" role="button">Tambah Latihan</a>
+                    <?php endif; ?>
                     <?php foreach ($tipeArray as $tipe): ?>
                         <p><?php echo $tipe['tipe']; ?></p>
                         <?php $latihanArray = findLatihanByTipe($tipe['id']); ?>
                         <?php foreach ($latihanArray as $latihan): ?>
-                            <p><a href="?id=<?php echo $latihan['id'] ?>"><?php echo $latihan['judul']; ?></a></p>
+                            <div class="row">
+                                <div class="col-md-8"><a href="?id=<?php echo $latihan['id'] ?>"><?php echo $latihan['judul']; ?></a></div>
+                                <?php if ($role == 'guru'): ?>
+                                    <div class="col-md-1 col-md-offset-3">
+                                        <a href="latihan_admin.php?action=edit&tipe=<?php echo $tipe['tipe']; ?>&id=<?php echo $latihan['id']; ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="function/latihan/nonaktif.php?id=<?php echo $latihan['id']; ?>"><span class="glyphicon glyphicon-flag"></span></a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         <?php endforeach; ?>
                     <?php endforeach; ?>
                 </section>
@@ -41,24 +56,26 @@ $tipeArray = getTipeLatihan();
                     <?php $soalArray = findSoalByLatihan($latihan['id'], $tipe['tipe']); ?>
                     <input type="hidden" value="<?php echo $tipe['tipe']; ?>" name="tipe">
                     <input type="hidden" value=<?php echo $latihan['id']; ?> name="latihan">
-                    <section>
-                        <?php foreach ($soalArray as $key => $soal): ?>
-                            <p><?php echo ($key+1).'. '.$soal['soal']; ?></p>
-                            <?php if ($tipe['tipe'] == "Pilihan Ganda"): ?>
-                                <ul>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="A" /><?php echo $soal['pilihan_1']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="B" /><?php echo $soal['pilihan_2']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="C" /><?php echo $soal['pilihan_3']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="D" /><?php echo $soal['pilihan_4']; ?></li>
-                                    <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="E" /><?php echo $soal['pilihan_5']; ?></li>
-                                </ul>
+                    <?php if (count($soalArray) > 0): ?>
+                        <section>
+                            <?php foreach ($soalArray as $key => $soal): ?>
+                                <p><?php echo ($key+1).'. '.$soal['soal']; ?></p>
+                                <?php if ($tipe['tipe'] == "Pilihan Ganda"): ?>
+                                    <ul>
+                                        <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="A" /><?php echo $soal['pilihan_1']; ?></li>
+                                        <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="B" /><?php echo $soal['pilihan_2']; ?></li>
+                                        <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="C" /><?php echo $soal['pilihan_3']; ?></li>
+                                        <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="D" /><?php echo $soal['pilihan_4']; ?></li>
+                                        <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="E" /><?php echo $soal['pilihan_5']; ?></li>
+                                    </ul>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ($tipe['tipe'] == "Isian"): ?>
+                                <p>Jawaban : <input type="file" name="jawaban" /></p>
                             <?php endif; ?>
-                        <?php endforeach; ?>
-                        <?php if ($tipe['tipe'] == "Isian"): ?>
-                            <p>Jawaban : <input type="file" name="jawaban" /></p>
-                        <?php endif; ?>
-                    </section>
-                    <input type="submit" value="Kumpul" />
+                        </section>
+                        <input type="submit" value="Kumpul" />
+                    <?php endif; ?>
                 </form>
             <?php endif; ?>
         </article>
