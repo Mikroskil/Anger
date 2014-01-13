@@ -45,7 +45,6 @@ if ($_GET['action'] == 'edit'){
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">Kategori</label>
-                        <?php $kategori = findOneKategori($materi['id_kategori']); ?>
                         <div class="col-sm-10">
                             <select class="form-control" name="kategori">
                                 <?php foreach ($kategoriArray as $kategori): ?>

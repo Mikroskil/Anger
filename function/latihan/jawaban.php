@@ -25,7 +25,7 @@ if ($tipe == "Pilihan Ganda") {
         }
     }
 } else {
-
+    var_dump($kumpulanJawaban);die();
 }
 
 header("Location: ../../nilai.php");
