@@ -20,13 +20,48 @@ function tambahJawabanPilihanGanda($user, $latihan, $pilgan, $jawaban, $hasil){
     ));
 }
 
-function findJawaban($user){
+function tambahJawabanIsian($user, $latihan, $jawaban){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        INSERT INTO jawaban_isian
+        (id_user, id_latihan, jawaban)
+        VALUES
+        (:user, :latihan, :jawaban)
+    ');
+
+    $sth->execute(array(
+        'user' => $user,
+        'latihan' => $latihan,
+        'jawaban' => $jawaban
+    ));
+}
+
+function findJawabanPilihanGanda($user){
     global $pdo;
 
     $sth = $pdo->prepare('
         SELECT j.id_user, l.judul, count(hasil) as total,
             count(CASE WHEN hasil=1 THEN 1 END) as benar
         FROM jawaban_pilgan j
+        INNER JOIN latihan l on l.id=j.id_latihan
+        WHERE j.id_user = :user
+        GROUP BY j.id_latihan
+    ');
+
+    $sth->execute(array(
+        'user' => $user
+    ));
+    
+    return $sth->fetchAll(PDO::FETCH_BOTH);
+}
+
+function findJawabanIsian($user){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        SELECT j.id_user, l.judul, jawaban, poin
+        FROM jawaban_isian j
         INNER JOIN latihan l on l.id=j.id_latihan
         WHERE j.id_user = :user
         GROUP BY j.id_latihan

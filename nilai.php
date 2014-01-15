@@ -3,7 +3,8 @@ require_once __DIR__.'/function/jawaban.php';
 require_once __DIR__.'/function/library.php';
 
 $username = getUsername();
-$jawabanArray = findJawaban($username);
+$jawabanPilganArray = findJawabanPilihanGanda($username);
+$jawabanIsianArray = findJawabanIsian($username);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -27,11 +28,21 @@ $jawabanArray = findJawaban($username);
         <article id="content" class="layer">
             <h1>Nilai</h1>
             <section>
-                <?php foreach ($jawabanArray as $jawaban): ?>
+                <p>Pilihan Ganda</p>
+                <?php foreach ($jawabanPilganArray as $jawaban): ?>
                 <div class="row">
                     <div class="col-md-8"><?php echo $jawaban['judul']; ?></div>
                     <?php $nilai = round($jawaban['benar'] * 100.0 / $jawaban['total']); ?>
                     <div class="text-right"><?php echo $nilai; ?></div>
+                </div>
+                <?php endforeach; ?>
+                <p>Isian</p>
+                <?php foreach ($jawabanIsianArray as $jawaban): ?>
+                <div class="row">
+                    <div class="col-md-8"><?php echo $jawaban['judul']; ?></div>
+                    <div class="text-right">
+                        <?php echo (is_null($jawaban['poin'])) ? '-' : $jawaban['poin']; ?>
+                    </div>
                 </div>
                 <?php endforeach; ?>
             </section>

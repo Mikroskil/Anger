@@ -55,7 +55,7 @@ $tipeArray = getTipeLatihan();
                 <?php $tipe = findTipe($latihan['id_tipe']); ?>
                 <?php $cek = isPernahLatihan($username, $_GET['id'], $tipe['tipe']); ?>
                 <?php if (!$cek): ?>
-                    <form action="function/latihan/jawaban.php" method="post">
+                    <form action="function/latihan/jawaban.php" method="post" enctype="multipart/form-data">
                         <?php $soalArray = findSoalByLatihan($latihan['id'], $tipe['tipe']); ?>
                         <input type="hidden" value="<?php echo $tipe['tipe']; ?>" name="tipe">
                         <input type="hidden" value="<?php echo $latihan['id']; ?>" name="latihan">
@@ -77,7 +77,7 @@ $tipeArray = getTipeLatihan();
                                     <p>Jawaban : <input type="file" name="jawaban" /></p>
                                 <?php endif; ?>
                             </section>
-                            <input type="submit" value="Kumpul" />
+                            <input type="submit" class="btn btn-primary" value="Kumpul" />
                         <?php endif; ?>
                     </form>
                 <?php else: ?>
