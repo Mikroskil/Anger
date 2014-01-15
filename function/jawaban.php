@@ -38,3 +38,16 @@ function findJawaban($user){
     
     return $sth->fetchAll(PDO::FETCH_BOTH);
 }
+
+function editHasilPilihanGanda($latihan, $pilgan, $jawaban){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        UPDATE jawaban_pilgan
+        SET hasil = (CASE WHEN jawaban = :jawaban THEN 1 ELSE 0 END)
+        WHERE id_latihan = :latihan
+        AND id_pilgan = :pilgan
+    ');
+
+    $sth->execute(array('latihan' => $latihan, 'pilgan' => $pilgan, 'jawaban' => $jawaban));
+}
