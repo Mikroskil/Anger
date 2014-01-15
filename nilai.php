@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__.'/function/jawaban.php';
+require_once __DIR__.'/function/library.php';
 
-session_start();
-$jawabanArray = findJawaban($_SESSION['username']);
+$username = getUsername();
+$jawabanArray = findJawaban($username);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

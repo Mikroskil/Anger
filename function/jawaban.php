@@ -51,3 +51,26 @@ function editHasilPilihanGanda($latihan, $pilgan, $jawaban){
 
     $sth->execute(array('latihan' => $latihan, 'pilgan' => $pilgan, 'jawaban' => $jawaban));
 }
+
+function isPernahLatihan($username, $latihan, $tipe){
+    global $pdo;
+
+    if ($tipe == "Pilihan Ganda"){
+        $sth = $pdo->prepare('
+            SELECT * FROM jawaban_pilgan
+            WHERE id_latihan = :latihan
+            AND id_user = :username
+        ');
+    } else {
+        $sth = $pdo->prepare('
+            SELECT * FROM jawaban_isian
+            WHERE id_latihan = :latihan
+            AND id_user = :username
+        ');
+    }
+
+    $sth->execute(array('latihan' => $latihan, 'username' => $username));
+    $jawaban = $sth->fetchAll(PDO::FETCH_BOTH);
+
+    return count($jawaban) > 0;
+}
