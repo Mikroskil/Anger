@@ -60,7 +60,7 @@ function findJawabanIsian($user){
     global $pdo;
 
     $sth = $pdo->prepare('
-        SELECT j.id_user, l.judul, jawaban, poin
+        SELECT j.id_user, j.id_latihan, l.judul, jawaban, poin
         FROM jawaban_isian j
         INNER JOIN latihan l on l.id=j.id_latihan
         WHERE j.id_user = :user
@@ -85,6 +85,19 @@ function editHasilPilihanGanda($latihan, $pilgan, $jawaban){
     ');
 
     $sth->execute(array('latihan' => $latihan, 'pilgan' => $pilgan, 'jawaban' => $jawaban));
+}
+
+function koreksiNilaiIsian($nilai, $user, $latihan){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        UPDATE jawaban_isian
+        SET poin = :nilai
+        WHERE id_latihan = :latihan
+        AND id_user = :user
+    ');
+
+    $sth->execute(array('latihan' => $latihan, 'user' => $user, 'nilai' => $nilai));
 }
 
 function isPernahLatihan($username, $latihan, $tipe){

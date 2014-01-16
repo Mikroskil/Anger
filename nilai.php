@@ -2,11 +2,11 @@
 require_once __DIR__.'/function/jawaban.php';
 require_once __DIR__.'/function/library.php';
 
-if (!isset($_GET['siswa'])) {
-    $username = getUsername();
-} else {
-    $username = $_GET['siswa'];
+if (isset($_POST['nilai'])) {
+    koreksiNilaiIsian($_POST['nilai'], $_GET['siswa'], $_POST['latihan']);
 }
+
+$username = getUsername();
 $role = getRole($username);
 ?>
 
@@ -30,7 +30,10 @@ $role = getRole($username);
         </header>
         <article id="content" class="layer">
             <h1>Nilai</h1>
-            <?php if ($role == 'siswa'): ?>
+            <?php if ($role == 'siswa' || isset($_GET['siswa'])): ?>
+                <?php if (isset($_GET['siswa'])): ?>
+                    <?php $username = $_GET['siswa']; ?>
+                <?php endif; ?>
                 <?php $jawabanPilganArray = findJawabanPilihanGanda($username); ?>
                 <?php $jawabanIsianArray = findJawabanIsian($username); ?>
                 <section>
@@ -47,7 +50,20 @@ $role = getRole($username);
                     <div class="row">
                         <div class="col-md-8"><?php echo $jawaban['judul']; ?></div>
                         <div class="text-right">
-                            <?php echo (is_null($jawaban['poin'])) ? '-' : $jawaban['poin']; ?>
+                            <?php if ($role == 'siswa'): ?>
+                                <?php echo (is_null($jawaban['poin'])) ? 'Nilai sedang diproses' : $jawaban['poin']; ?>
+                            <?php else: ?>
+                                <?php if (is_null($jawaban['poin'])): ?>
+                                    <a href="uploads/<?php echo $jawaban['jawaban']; ?>">Jawaban</a>
+                                    <form action="nilai.php?siswa=<?php echo $_GET['siswa']; ?>" method="post">
+                                        <input type="number" name="nilai">
+                                        <input type="hidden" name="latihan" value="<?php echo $jawaban['id_latihan']; ?>">
+                                        <button type="submit" class="btn">Koreksi</button>
+                                    </form>
+                                <?php else: ?>
+                                    <?php echo $jawaban['poin']; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <?php endforeach; ?>
