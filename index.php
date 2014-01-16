@@ -1,3 +1,12 @@
+<?php
+require_once __DIR__.'/function/session.php';
+
+session_start();
+if (hasSession('username')) {
+	header('Location: home.php');
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -5,16 +14,24 @@
 </head>
 <body>
     <div id="container">
-        <?php include_once "header.php";?>
         <article id="content" class="layer">
-            <h1>HALAMAN UTAMA</h1>
+            <h1>LOGIN</h1>
+			<?php if (hasSession('error')): ?>
+				<p class="alert alert-danger"><?php echo getSession('error'); ?></p>
+				<?php unset($_SESSION['error']); ?>
+			<?php endif; ?>
             <section>
-                <p>
-                    Website ini merupakan website matematika yang ditujukan kepada siswa SMA.
-                    Dalam website ini, tersedia materi lengkap dari SMA 1 sampai SMA 3.
-                    Selain itu, juga terdapat soal latihan untuk dikerjakan oleh siswa SMA beserta pembahasannya.
-                    Tidak hanya itu, website ini juga memberikan fitur untuk try out UN SMA.
-                </p>
+                <form action="login.php" method="post">
+					<div class="form-group">
+						<label class="control-label col-sm-1">Username</label>
+						<div class="col-sm-4"><input type="text" name="user" class="form-control"></div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-1">Password</label>
+						<div class="col-sm-4"><input type="password" name="pass" class="form-control"></div>
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
             </section>
         </article>
         <footer>
