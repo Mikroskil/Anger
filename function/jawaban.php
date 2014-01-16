@@ -109,3 +109,37 @@ function isPernahLatihan($username, $latihan, $tipe){
 
     return count($jawaban) > 0;
 }
+
+function getSekolah($user){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        SELECT nama_sekolah FROM profil WHERE username = :user
+    ');
+
+    $sth->execute(array(
+        'user' => $user
+    ));
+    
+    $profil = $sth->fetch(PDO::FETCH_ASSOC);
+    return $profil['nama_sekolah'];
+}
+
+function findSiswaPerSekolah($sekolah){
+    global $pdo;
+
+    $sth = $pdo->prepare('
+        SELECT p.nama, p.username, p.nama_sekolah, u.id_role
+        FROM profil p
+        INNER JOIN user_role u
+        ON u.username = p.username
+        WHERE id_role = 1
+        AND nama_sekolah = :sekolah
+    ');
+
+    $sth->execute(array(
+        'sekolah' => $sekolah
+    ));
+    
+    return $sth->fetchAll(PDO::FETCH_BOTH);
+}
