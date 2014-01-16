@@ -16,7 +16,6 @@ body {
     color: #03C;
     font-family: "Verdana", cursive;
     font-size: 16px;
-    
 }
 
 a:link {
@@ -210,4 +209,8 @@ footer {
 
 .layer h2 {
     text-decoration: underline;
+}
+
+.pilihan {
+    margin-left: 15px !important;
 }

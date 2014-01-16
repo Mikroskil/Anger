@@ -4,6 +4,8 @@ require_once __DIR__.'/function/library.php';
 require_once __DIR__.'/function/jawaban.php';
 
 $tipeArray = getTipeLatihan();
+$username = getUsername();
+$role = getRole($username);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,8 +27,6 @@ $tipeArray = getTipeLatihan();
             </ul>		
         </header>
         <article id="content" class="layer">
-            <?php $username = getUsername(); ?>
-            <?php $role = getRole($username); ?>
             <?php if (!isset($_GET['id'])): ?>
                 <h1>Latihan</h1>
                 <section>
@@ -60,16 +60,24 @@ $tipeArray = getTipeLatihan();
                         <input type="hidden" value="<?php echo $tipe['tipe']; ?>" name="tipe">
                         <input type="hidden" value="<?php echo $latihan['id']; ?>" name="latihan">
                         <?php if (count($soalArray) > 0): ?>
-                            <section>
+                            <section class="text-left">
                                 <?php foreach ($soalArray as $key => $soal): ?>
                                     <p><?php echo ($key+1).'. '.$soal['soal']; ?></p>
                                     <?php if ($tipe['tipe'] == "Pilihan Ganda"): ?>
-                                        <ul>
-                                            <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="A" /><?php echo $soal['pilihan_1']; ?></li>
-                                            <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="B" /><?php echo $soal['pilihan_2']; ?></li>
-                                            <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="C" /><?php echo $soal['pilihan_3']; ?></li>
-                                            <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="D" /><?php echo $soal['pilihan_4']; ?></li>
-                                            <li><input type="radio" name="jawaban[<?php echo $key; ?>]" value="E" /><?php echo $soal['pilihan_5']; ?></li>
+                                        <ul class="list-inline row pilihan">
+                                            <?php if ($role == 'siswa'): ?>
+                                                <li class="col-md-2"><input type="radio" name="jawaban[<?php echo $key; ?>]" value="A" /><?php echo $soal['pilihan_1']; ?></li>
+                                                <li class="col-md-2"><input type="radio" name="jawaban[<?php echo $key; ?>]" value="B" /><?php echo $soal['pilihan_2']; ?></li>
+                                                <li class="col-md-2"><input type="radio" name="jawaban[<?php echo $key; ?>]" value="C" /><?php echo $soal['pilihan_3']; ?></li>
+                                                <li class="col-md-2"><input type="radio" name="jawaban[<?php echo $key; ?>]" value="D" /><?php echo $soal['pilihan_4']; ?></li>
+                                                <li class="col-md-2"><input type="radio" name="jawaban[<?php echo $key; ?>]" value="E" /><?php echo $soal['pilihan_5']; ?></li>
+                                            <?php else: ?>
+                                                <li class="col-md-2">A. <?php echo $soal['pilihan_1']; ?></li>
+                                                <li class="col-md-2">B. <?php echo $soal['pilihan_2']; ?></li>
+                                                <li class="col-md-2">C. <?php echo $soal['pilihan_3']; ?></li>
+                                                <li class="col-md-2">D. <?php echo $soal['pilihan_4']; ?></li>
+                                                <li class="col-md-2">E. <?php echo $soal['pilihan_5']; ?></li>
+                                            <?php endif; ?>
                                         </ul>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
@@ -77,7 +85,9 @@ $tipeArray = getTipeLatihan();
                                     <p>Jawaban : <input type="file" name="jawaban" /></p>
                                 <?php endif; ?>
                             </section>
-                            <input type="submit" class="btn btn-primary" value="Kumpul" />
+                            <?php if ($role == 'siswa'): ?>
+                                <input type="submit" class="btn btn-primary" value="Kumpul" />
+                            <?php endif; ?>
                         <?php endif; ?>
                     </form>
                 <?php else: ?>
