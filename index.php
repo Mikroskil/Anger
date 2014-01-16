@@ -32,6 +32,8 @@ if (hasSession('username')) {
 					</div>
 					<button type="submit" class="btn btn-primary">Login</button>
 				</form>
+				<br/>
+				<a href="register.php" class="btn btn-default">Register</a>
             </section>
         </article>
         <footer>
