@@ -2,6 +2,8 @@
 require_once __DIR__.'/function/latihan.php';
 require_once __DIR__.'/function/library.php';
 
+$username = getUsername();
+
 if ($_GET['action'] == 'edit'){
     $latihan = findOneLatihan($_GET['id']);
     $soalArray = findSoalByLatihan($_GET['id'], $_GET['tipe']);

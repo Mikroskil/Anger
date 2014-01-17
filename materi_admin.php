@@ -2,6 +2,8 @@
 require_once __DIR__.'/function/materi.php';
 require_once __DIR__.'/function/library.php';
 
+$username = getUsername();
+
 $kategoriArray = getKategori();
 if ($_GET['action'] == 'edit'){
     $materi = findOneMateri($_GET['id']);
