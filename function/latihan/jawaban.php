@@ -2,10 +2,9 @@
 require_once __DIR__.'/../../config.php';
 require_once __DIR__.'/../jawaban.php';
 require_once __DIR__.'/../latihan.php';
+require_once __DIR__.'/../library.php';
 
-session_start();
-
-$user = $_SESSION['username'];
+$user = getUsername();
 $tipe = $_POST['tipe'];
 $latihan = $_POST['latihan'];
 $kumpulanJawaban = $_POST['jawaban'];
@@ -25,7 +24,9 @@ if ($tipe == "Pilihan Ganda") {
         }
     }
 } else {
-
+    $target = '../../uploads/'.basename($_FILES['jawaban']['name']);
+    move_uploaded_file($_FILES['jawaban']['tmp_name'], $target);
+    tambahJawabanIsian($user, $latihan, $_FILES['jawaban']['name']);
 }
 
 header("Location: ../../nilai.php");

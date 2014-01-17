@@ -3,6 +3,8 @@ require_once __DIR__.'/function/materi.php';
 require_once __DIR__.'/function/library.php';
 
 $kategoriArray = getKategori();
+$username = getUsername();
+$role = getRole($username);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -14,8 +16,6 @@ $kategoriArray = getKategori();
     <div id="container">
         <?php include_once "header.php";?>
         <article id="content" class="layer">
-            <?php $username = getUsername(); ?>
-            <?php $role = getRole($username); ?>
             <?php if (!isset($_GET['id'])): ?>
                 <h1>Materi Pembelajaran</h1>
                 <section>
